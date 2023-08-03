@@ -68,6 +68,30 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you are using for more
   # information on available options.
 
+  config.vm.define "web" do |web|
+    web.vm.box = "ubuntu/trusty64"
+    web.vm.hostname = "web.example.com"
+    web.vm.network "private_network", ip: "192.168.95.120"
+   # web.vm.synced_folder "code/", "/app/code"
+    web.vm.provider "virtualbox" do |v|
+        v.name = "web1"
+        v.memory = 1048
+        v.cpus = 1
+    end
+end
+
+config.vm.define "db" do |db|
+        db.vm.box = "ubuntu/trusty64"
+        db.vm.hostname = "db.example.com"
+        db.vm.network "private_network", ip: "192.168.95.110"
+       # db.vm.synced_folder "data/", "/db/data"
+        db.vm.provider "virtualbox" do |v|
+            v.name = "db"
+            v.memory = 1048
+            v.cpus = 1
+        end
+end
+
   # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
