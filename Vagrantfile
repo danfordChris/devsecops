@@ -114,7 +114,8 @@ Vagrant.configure("2") do |config|
   # Web Server VM
   config.vm.define "web" do |web|
     web.vm.box = "ubuntu/trusty64"
-    web.vm.network "private_network", type: "dhcp"
+    web.vm.network "private_network", ip: "192.168.33.10"
+    web.vm.synced_folder "web/code/", "/app/code"
     web.vm.network "forwarded_port", guest: 80, host: 8080
 
     web.vm.provider "virtualbox" do |vb|
@@ -126,8 +127,8 @@ Vagrant.configure("2") do |config|
   # Database Server VM
   config.vm.define "db" do |db|
     db.vm.box = "ubuntu/trusty64"
-    db.vm.network "private_network", type: "dhcp"
-
+    db.vm.network "private_network", ip: "192.168.33.20"
+    db.vm.synced_folder "db/data/", "/db/data"
     db.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
       vb.cpus = 2
